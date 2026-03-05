@@ -16,16 +16,14 @@ static BOOL ensure_permission(void) {
     __block BOOL granted = NO;
     dispatch_semaphore_t sem = dispatch_semaphore_create(0);
 
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [[UNUserNotificationCenter currentNotificationCenter]
-            requestAuthorizationWithOptions:(UNAuthorizationOptionAlert | UNAuthorizationOptionSound | UNAuthorizationOptionBadge)
-            completionHandler:^(BOOL g, NSError *error) {
-                granted = g;
-                dispatch_semaphore_signal(sem);
-            }];
-    });
+    [[UNUserNotificationCenter currentNotificationCenter]
+        requestAuthorizationWithOptions:(UNAuthorizationOptionAlert | UNAuthorizationOptionSound | UNAuthorizationOptionBadge)
+        completionHandler:^(BOOL g, NSError *error) {
+            granted = g;
+            dispatch_semaphore_signal(sem);
+        }];
 
-    dispatch_semaphore_wait(sem, dispatch_time(DISPATCH_TIME_NOW, 10 * NSEC_PER_SEC));
+    dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);
     return granted;
 }
 
@@ -61,7 +59,7 @@ static char *handle_send(const char *json) {
             dispatch_semaphore_signal(sem);
         }];
 
-    dispatch_semaphore_wait(sem, dispatch_time(DISPATCH_TIME_NOW, 5 * NSEC_PER_SEC));
+    dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);
     return result ?: strdup("{\"ok\":true}");
 }
 
