@@ -1,0 +1,9 @@
+{
+  "name": "notification",
+  "register": "phptoro_notification_plugin",
+  "include": "notification.h",
+  "platforms": {
+    "macos": { "sources": ["notification_macos.m"], "frameworks": ["UserNotifications"] },
+    "ios":   { "sources": ["notification_ios.m"],   "frameworks": ["UserNotifications"] }
+  }
+}

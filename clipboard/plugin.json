@@ -1,0 +1,9 @@
+{
+  "name": "clipboard",
+  "register": "phptoro_clipboard_plugin",
+  "include": "clipboard.h",
+  "platforms": {
+    "macos": { "sources": ["clipboard_macos.m"], "frameworks": [] },
+    "ios":   { "sources": ["clipboard_ios.m"],   "frameworks": [] }
+  }
+}
